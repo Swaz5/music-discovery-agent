@@ -1,0 +1,10 @@
+anthropic
+fastapi
+uvicorn
+httpx
+chromadb
+python-dotenv
+mcp
+librosa
+soundfile
+numpy
