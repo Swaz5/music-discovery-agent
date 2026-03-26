@@ -35,6 +35,7 @@ from typing import Any
 import anthropic
 
 from src.agent.tools import TOOLS_REGISTRY, execute_tool, get_tool_schemas
+from src.agent.preference_engine import PreferenceEngine
 
 logger = logging.getLogger(__name__)
 
@@ -148,11 +149,15 @@ class MusicDiscoveryAgent:
     enough information to produce personalised recommendations.
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        preference_engine: PreferenceEngine | None = None,
+    ) -> None:
         self._client = anthropic.AsyncAnthropic()
         self._tools = TOOLS_REGISTRY
         self.model = _MODEL
         self.max_iterations = _MAX_ITERATIONS
+        self._prefs = preference_engine or PreferenceEngine()
 
     # ------------------------------------------------------------------
     # Public API
@@ -307,8 +312,18 @@ class MusicDiscoveryAgent:
     # ------------------------------------------------------------------
 
     def _build_system_prompt(self) -> str:
-        """Return the system prompt used for every API call in the loop."""
-        return _SYSTEM_PROMPT
+        """
+        Return the system prompt for this API call.
+
+        If the user has saved preferences, the taste profile is appended
+        after the base prompt so Claude can personalise recommendations.
+        The profile section is regenerated fresh on every call so it always
+        reflects the latest ratings.
+        """
+        taste_context = self._prefs.get_recommendation_context()
+        if not taste_context:
+            return _SYSTEM_PROMPT
+        return _SYSTEM_PROMPT + "\n\n" + taste_context
 
     # ------------------------------------------------------------------
     # Response parsing
