@@ -8,3 +8,6 @@ mcp
 librosa
 soundfile
 numpy
+pytest
+pytest-asyncio
+anyio[trio]
