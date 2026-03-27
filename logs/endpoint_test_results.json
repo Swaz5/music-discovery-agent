@@ -1,0 +1,122 @@
+[
+  {
+    "section": "1 · POST /discover",
+    "name": "\"energetic indie rock for a road…\"  (normal case)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "1 · POST /discover",
+    "name": "\"asdfghjkl\"  (gibberish — agent should handle gracefully)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "1 · POST /discover",
+    "name": "\"\"  (empty string — Pydantic validation error)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "1 · POST /discover",
+    "name": "\"music that sounds like the color…\"  (abstract/synesthetic — tests creativity)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "2 · GET /artist/{name}",
+    "name": "\"Radiohead\"  (well-known artist)",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "2 · GET /artist/{name}",
+    "name": "\"Totally Fake Band Name 12345\"  (not found — all data fields empty)",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "2 · GET /artist/{name}",
+    "name": "\"björk\"  (special characters — 200 or 404 accepted, not 5xx)",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "3 · POST /analyze-taste",
+    "name": "5 diverse artists — standard case (5 artist(s))",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "3 · POST /analyze-taste",
+    "name": "1 artist — edge case (minimal input) (1 artist(s))",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "3 · POST /analyze-taste",
+    "name": "10 artists — larger input set (10 artist(s))",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "4 · POST /bridge",
+    "name": "\"jazz\" → \"electronic\"  (clear bridge exists)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "4 · POST /bridge",
+    "name": "\"classical\" → \"punk\"  (very different — harder bridge)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "4 · POST /bridge",
+    "name": "\"rock\" → \"rock\"  (same genre — should return 422)",
+    "passed": false,
+    "detail": "Request timed out (>180s)"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "rate \"Portishead\"",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "rate \"Massive Attack\"",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "rate \"Taylor Swift\"",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "rate \"Brian Eno\"",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "rate \"Nickelback\"",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "GET /taste-profile",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  },
+  {
+    "section": "5 · POST /rate  +  GET /taste-profile",
+    "name": "GET /history",
+    "passed": false,
+    "detail": "ReadTimeout: timed out"
+  }
+]

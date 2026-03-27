@@ -295,7 +295,20 @@ async def get_artist(name: str):
         logger.exception("Failed to fetch artist profile for %r", name)
         raise HTTPException(status_code=500, detail=str(exc))
 
-    if not profile or not profile.get("name"):
+    # music_service always returns a dict with name set (graceful degradation),
+    # so we detect "not found" by checking whether all meaningful fields are
+    # empty/zero — the signature of an artist that exists in neither Last.fm
+    # nor Deezer.
+    not_found = (
+        not profile
+        or (
+            not profile.get("bio")
+            and not profile.get("tags")
+            and not profile.get("listeners")
+            and not profile.get("fan_count")
+        )
+    )
+    if not_found:
         raise HTTPException(status_code=404, detail=f"Artist not found: {name!r}")
 
     return profile

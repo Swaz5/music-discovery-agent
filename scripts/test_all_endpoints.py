@@ -316,8 +316,11 @@ def test_artist(t: TestRunner) -> None:
 
     cases = [
         ("Radiohead", 200, "well-known artist"),
-        ("Totally Fake Band Name 12345", 404, "not found"),
-        ("björk", None, "special characters — 200 or 404, not 500"),
+        ("Totally Fake Band Name 12345", 404, "not found — all data fields empty"),
+        # björk: Last.fm may return the artist (200) or report not found (404).
+        # Either is correct.  A 5xx means the server crashed on the special char,
+        # which is the only failure we care about preventing.
+        ("björk", None, "special characters — 200 or 404 accepted, not 5xx"),
     ]
 
     for name, expected_status, label in cases:
@@ -668,7 +671,10 @@ def main() -> int:
     save_openapi_spec(base_url, LOGS_DIR)
 
     # ── Run integration tests ─────────────────────────────────────────────────
-    t = TestRunner(base_url, timeout=180.0)
+    # Bridge calls make several rounds of Last.fm BFS + Claude; give them
+    # up to 5 minutes.  Artist/rate calls should complete in under 30 s now
+    # that lastfm_client has a 10 s timeout per HTTP request.
+    t = TestRunner(base_url, timeout=300.0)
     overall_start = time.time()
 
     try:

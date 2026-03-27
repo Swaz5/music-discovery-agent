@@ -15,6 +15,11 @@ load_dotenv()
 BASE_URL = "http://ws.audioscrobbler.com/2.0/"
 API_KEY = os.getenv("LASTFM_API_KEY")
 
+# Hard timeout for every Last.fm HTTP call.  Without this a single slow/hung
+# response blocks the entire FastAPI asyncio event loop, making every other
+# in-flight request also time out.
+_TIMEOUT = httpx.Timeout(10.0)
+
 
 def _base_params(method: str) -> dict:
     return {
@@ -31,7 +36,7 @@ async def search_artist(name: str) -> dict:
         "artist": name,
         "limit": 5,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -53,7 +58,7 @@ async def get_artist_info(artist: str) -> dict:
         **_base_params("artist.getInfo"),
         "artist": artist,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -87,7 +92,7 @@ async def get_similar_artists(artist: str, limit: int = 10) -> list[dict]:
         "artist": artist,
         "limit": limit,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -112,7 +117,7 @@ async def get_artist_tags(artist: str) -> list[str]:
         **_base_params("artist.getTopTags"),
         "artist": artist,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -132,7 +137,7 @@ async def get_top_tracks(artist: str, limit: int = 5) -> list[dict]:
         "artist": artist,
         "limit": limit,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -159,7 +164,7 @@ async def get_tag_top_artists(tag: str, limit: int = 10) -> list[dict]:
         "tag": tag,
         "limit": limit,
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
         response = await client.get(BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
