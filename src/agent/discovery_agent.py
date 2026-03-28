@@ -40,7 +40,7 @@ from src.agent.preference_engine import PreferenceEngine
 logger = logging.getLogger(__name__)
 
 _MODEL = "claude-sonnet-4-20250514"
-_MAX_ITERATIONS = 10
+_MAX_ITERATIONS = 15
 _MAX_TOKENS = 4096
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -115,6 +115,17 @@ request, do not include that track.
 outside the obvious genre but shares the emotional texture — and flag it \
 explicitly as a wild card.
 - **Specific tracks only**: recommend a particular track, not just an artist name.
+
+# Budget awareness
+
+You have at most {budget} tool calls available for this query. Spend them wisely:
+
+- Call `get_audio_features` for **at most 3–4 artists** — only the most promising candidates.
+- Call `get_similar_artists` **at most twice** per query.
+- **Reserve your last 2–3 iterations** to write your final formatted recommendations.
+- If you have already made 10 or more tool calls, **stop exploring immediately** and write your recommendations using what you already know.
+
+Exceeding the budget means your recommendations will be cut off and the user gets nothing. A concise response with 5 great picks beats an exhaustive one that never arrives.
 
 # Response format
 
@@ -195,7 +206,7 @@ class MusicDiscoveryAgent:
             response = await self._client.messages.create(
                 model=self.model,
                 max_tokens=_MAX_TOKENS,
-                system=self._build_system_prompt(),
+                system=self._build_system_prompt(iterations_used=iterations - 1),
                 tools=get_tool_schemas(),
                 messages=messages,
             )
@@ -311,19 +322,20 @@ class MusicDiscoveryAgent:
     # System prompt
     # ------------------------------------------------------------------
 
-    def _build_system_prompt(self) -> str:
+    def _build_system_prompt(self, iterations_used: int = 0) -> str:
         """
         Return the system prompt for this API call.
 
-        If the user has saved preferences, the taste profile is appended
-        after the base prompt so Claude can personalise recommendations.
-        The profile section is regenerated fresh on every call so it always
-        reflects the latest ratings.
+        The budget figure in the prompt is updated each iteration so Claude
+        always sees exactly how many tool calls remain.  If the user has saved
+        preferences, the taste profile is appended after the base prompt.
         """
+        remaining = max(0, _MAX_ITERATIONS - iterations_used)
+        prompt = _SYSTEM_PROMPT.format(budget=remaining)
         taste_context = self._prefs.get_recommendation_context()
         if not taste_context:
-            return _SYSTEM_PROMPT
-        return _SYSTEM_PROMPT + "\n\n" + taste_context
+            return prompt
+        return prompt + "\n\n" + taste_context
 
     # ------------------------------------------------------------------
     # Response parsing

@@ -1,0 +1,19 @@
+{
+  "stats": {
+    "python_files": 19,
+    "test_files": 8,
+    "src_lines": 5141,
+    "modules": 13,
+    "agent_tools": 6,
+    "tool_names": [
+      "search_artist",
+      "get_similar_artists",
+      "search_by_tag",
+      "get_audio_features",
+      "search_knowledge_base",
+      "search_tracks"
+    ],
+    "api_endpoints": 9
+  },
+  "test_summary": "203 passed, 3 warnings in 32.15s"
+}

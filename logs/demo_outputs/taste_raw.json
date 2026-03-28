@@ -1,0 +1,45 @@
+{
+  "taste_identity": "Atmospheric Experimentalist",
+  "analysis": "This listener gravitates toward artists who masterfully blend organic and electronic elements, creating immersive soundscapes that prioritize texture and atmosphere over conventional song structures. The high energy (0.94) and danceability (0.87) metrics reveal a preference for music that maintains rhythmic momentum while exploring unconventional sonic territories. Both artists share a commitment to pushing boundaries within rock contexts, whether through Radiohead's electronic deconstructions or Tame Impala's psychedelic wall-of-sound productions.\n\nThe moderate valence (0.51) suggests comfort with emotional ambiguity—music that sits between melancholy and euphoria, often within the same track. The high acousticness combined with electronic tags indicates appreciation for artists who blur the line between human and machine, organic and synthetic. The tempo variance reveals openness to rhythmic experimentation, from Radiohead's off-kilter time signatures to Tame Impala's hypnotic grooves.\n\nThis taste profile points to someone who values innovation over nostalgia, seeking artists who use familiar rock instrumentation as a launching pad for sonic exploration rather than an end goal.",
+  "common_threads": [
+    "Electronic-organic fusion",
+    "Atmospheric production techniques",
+    "Rhythmic experimentation within rock frameworks",
+    "Emotionally complex but danceable",
+    "Studio-as-instrument philosophy"
+  ],
+  "audio_profile": {
+    "energy": 0.94,
+    "danceability": 0.868,
+    "valence": 0.511,
+    "tempo": 108.77,
+    "acousticness": 0.8
+  },
+  "blind_spots": [
+    {
+      "genre": "Ambient Techno",
+      "why": "Combines the electronic textures and hypnotic rhythms present in both artists, with similar energy but more focus on sonic immersion",
+      "try_this": "Boards of Canada — Roygbiv"
+    },
+    {
+      "genre": "Dream Pop",
+      "why": "Shares the atmospheric production and moderate valence, with similar acoustic-electronic blend and indie sensibilities",
+      "try_this": "Beach House — Space Song"
+    },
+    {
+      "genre": "Neo-Soul",
+      "why": "Matches the high danceability and electronic experimentation while maintaining organic elements and emotional complexity",
+      "try_this": "FKA twigs — Two Weeks"
+    },
+    {
+      "genre": "Post-Rock",
+      "why": "Aligns with the experimental approach to rock instrumentation and builds atmospheric tension through unconventional song structures",
+      "try_this": "Godspeed You! Black Emperor — Storm"
+    }
+  ],
+  "outlier": {
+    "artist": "Radiohead",
+    "why_different": "Lower energy and danceability compared to Tame Impala's consistently high rhythmic drive, plus more emphasis on deconstructed song forms and cerebral complexity rather than psychedelic groove-based hypnotism"
+  },
+  "_elapsed": 24.2
+}

@@ -7,7 +7,6 @@ No authentication required — Deezer's catalog API is fully open.
 """
 
 import asyncio
-import os
 from pathlib import Path
 
 import httpx

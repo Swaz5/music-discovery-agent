@@ -35,7 +35,7 @@ Audio features schema (Librosa-derived, same as music_service output)
 import json
 import logging
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -142,7 +142,7 @@ class PreferenceEngine:
             "artist": artist,
             "liked": liked,
             "notes": notes,
-            "timestamp": datetime.utcnow().isoformat(timespec="seconds"),
+            "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "tags": tags,
             "audio_features": features,
         }

@@ -1,0 +1,43 @@
+# Secrets — never bake API keys into the image
+.env
+
+# Version control
+.git
+.gitignore
+
+# Python bytecode
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Test artefacts
+.pytest_cache
+htmlcov
+.coverage
+
+# Runtime state that is bind-mounted at container start
+# (excluding these keeps the build context small and prevents stale data
+# from being baked into the image layer)
+.chroma/
+data/previews/
+
+# Development tooling
+.venv
+venv
+*.egg-info
+dist
+build
+node_modules
+
+# Editor / OS artefacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea
+.vscode
+
+# Logs and demo outputs
+logs/
