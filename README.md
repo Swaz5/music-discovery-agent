@@ -24,10 +24,10 @@ Built on top of the Anthropic API with tool use. The agent decides which tools t
 
 The agent made 14 tool calls to get here: 1 KB search, 3 tag searches, 2 audio feature pulls, 1 similarity expansion, 7 Deezer track lookups. Each recommendation cites the specific audio numbers that justified the pick.
 
----
+### REST API Demo
+![REST API Demo](docs/demo-api.gif)
 
-## MCP Demo
-
+### MCP Claude Desktop Demo
 ![MCP Demo — Claude Desktop Integration](docs/demo-mcp.gif)
 
 ---
