@@ -26,6 +26,12 @@ The agent made 14 tool calls to get here: 1 KB search, 3 tag searches, 2 audio f
 
 ---
 
+## MCP Demo
+
+![MCP Demo — Claude Desktop Integration](docs/demo-mcp.gif)
+
+---
+
 ## Features
 
 **Vibe-based discovery** — natural language queries interpreted by Claude, not a keyword search. The agent decides which genres and tags to explore, fetches artists, downloads 30-second previews, and runs Librosa audio analysis on the actual audio.
